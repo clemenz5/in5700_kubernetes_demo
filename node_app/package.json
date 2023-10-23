@@ -5,6 +5,7 @@
     "ts-node": "^10.9.1"
   },
   "scripts": {
-    "start": "tsc server.ts; node server.js"
+    "start": "tsc server.ts; node server.js",
+    "build": "tsc server.ts"
   }
 }
