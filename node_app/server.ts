@@ -15,7 +15,7 @@ let lastRequestTime = 0;
 app.use((req: Request, res: Response, next: NextFunction) => {
   const now = Date.now();
 
-  if (now - lastRequestTime < 1000) {
+  if (now - lastRequestTime < 100) {
     process.exit(1);
 
     //res.status(429).json({ error: 'Too many requests. Try again later.' });
