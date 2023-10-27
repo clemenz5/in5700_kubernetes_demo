@@ -12,6 +12,13 @@ const requestLogPath = 'request.log';
 // Middleware to limit requests to 1 per second
 let lastRequestTime = 0;
 
+// Middleware to log requests to a file
+app.use((req: Request, res: Response, next: NextFunction) => {
+  const logEntry = `${new Date().toISOString()} - ${req.method} ${req.url}\n`;
+  fs.appendFileSync(requestLogPath, logEntry);
+  next();
+});
+
 app.use((req: Request, res: Response, next: NextFunction) => {
   const now = Date.now();
 
@@ -23,19 +30,6 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     lastRequestTime = now;
     next();
   }
-});
-
-// Middleware to log requests to a file
-app.use((req: Request, res: Response, next: NextFunction) => {
-  const logEntry = `${new Date().toISOString()} - ${req.method} ${req.url}\n`;
-
-  fs.appendFile(requestLogPath, logEntry, (err) => {
-    if (err) {
-      console.error('Error writing to the request log:', err);
-    }
-  });
-
-  next();
 });
 
 // API endpoint
